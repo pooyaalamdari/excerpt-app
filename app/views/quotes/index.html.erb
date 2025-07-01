@@ -1,0 +1,24 @@
+<%# app/views/quotes/index.html.erb %>
+
+<h1>گلچین‌ها</h1>
+
+<%# فرم جستجو %>
+<%= search_form_for @q, url: quotes_path, method: :get, class: "search-form" do |f| %>
+  <div class="search-input-group">
+    <%= f.search_field :keywords_cont, placeholder: "جستجو...", class: "search-field" %>
+    <%= f.button :submit, class: "search-button" do %>
+      <i class="fas fa-search"></i> <%# این خط برای آیکون ذره‌بین است %>
+    <% end %>
+  </div>
+<% end %>
+
+<div id="quotes">
+  <% @quotes.each_with_index do |quote, index| %>
+    <%= render quote %>
+    <% if index < @quotes.size - 1 %>
+      <hr>
+    <% end %>
+  <% end %>
+</div>
+
+<%= link_to "ایجاد گلچین جدید", new_quote_path %>

@@ -1,0 +1,10 @@
+<%# app/views/quotes/edit.html.erb %>
+
+<h1>ویرایش گلچین</h1>
+
+<%= render "form", quote: @quote %>
+
+<div>
+  <%= link_to "مشاهده این گلچین", @quote %> |
+  <%= link_to "بازگشت به گلچین‌ها", quotes_path %>
+</div>

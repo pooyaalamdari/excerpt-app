@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ExcerptApp</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+</head>
+
+<body dir="rtl">
+
+  <nav class="main-navbar">
+    <div class="navbar-container">
+      <div class="navbar-header">
+        <%= link_to "خانه", root_path, class: "navbar-brand" %>
+        <button class="navbar-toggler" id="navbarToggler">
+          <span class="toggler-icon"></span>
+          <span class="toggler-icon"></span>
+          <span class="toggler-icon"></span>
+        </button>
+      </div>
+
+      <div class="navbar-collapse" id="navbarLinks">
+        <div class="navbar-nav-main">
+          <div class="dropdown">
+            <a href="#" class="dropdown-toggle">گلچین‌ها <i class="fas fa-caret-down"></i></a>
+            <div class="dropdown-menu">
+              <%= link_to "همه گلچین‌ها", quotes_path %>
+              <% if user_signed_in? %>
+                <%= link_to "ایجاد گلچین جدید", new_quote_path %>
+                <%= link_to "گلچین‌های من", quotes_path(my_quotes: true) %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="navbar-nav-auth">
+          <% if user_signed_in? %>
+            <span class="username-display">سلام، <%= current_user.username %>!</span>
+            <%= link_to "ویرایش پروفایل", edit_user_registration_path %>
+            <%= link_to "خروج", destroy_user_session_path, data: { turbo_method: :delete } %>
+          <% else %>
+            <%= link_to "ورود", new_user_session_path %>
+            <%= link_to "ثبت نام", new_user_registration_path %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+<%= yield %>
+
+<%# جاوااسکریپت برای نوبار همبرگری و دراپ‌داون - به صورت inline اضافه شد %>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggler = document.getElementById('navbarToggler');
+    const navbarLinks = document.getElementById('navbarLinks');
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+
+    console.log('JS Loaded: Checking for elements...');
+    console.log('Navbar Toggler Element (ID: navbarToggler):', toggler);
+    console.log('Navbar Links Element (ID: navbarLinks):', navbarLinks);
+    console.log('Dropdown Toggle Element (.dropdown-toggle):', dropdownToggle);
+    console.log('Dropdown Menu Element (.dropdown-menu):', dropdownMenu);
+
+    if (toggler && navbarLinks) {
+      toggler.addEventListener('click', (event) => {
+        event.preventDefault();
+        navbarLinks.classList.toggle('show');
+        console.log('Toggler clicked! Navbar Links class list after toggle:', navbarLinks.classList);
+
+        if (!navbarLinks.classList.contains('show') && dropdownMenu) {
+          dropdownMenu.classList.remove('dropdown-open');
+          dropdownToggle.querySelector('i').classList.remove('fa-caret-up');
+          dropdownToggle.querySelector('i').classList.add('fa-caret-down');
+        }
+      });
+
+      navbarLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          if (link !== dropdownToggle && navbarLinks.classList.contains('show')) {
+            navbarLinks.classList.remove('show');
+            if (dropdownMenu) {
+              dropdownMenu.classList.remove('dropdown-open');
+              dropdownToggle.querySelector('i').classList.remove('fa-caret-up');
+              dropdownToggle.querySelector('i').classList.add('fa-caret-down');
+            }
+          }
+        });
+      });
+    } else {
+      console.error('Error: One or both of Navbar toggler (ID: navbarToggler) or Navbar links (ID: navbarLinks) elements were not found in the DOM.');
+    }
+
+    if (dropdownToggle && dropdownMenu) {
+      dropdownToggle.addEventListener('click', (event) => {
+        event.preventDefault();
+        // فقط در حالت موبایل این رفتار را فعال کن
+        if (window.innerWidth <= 768) {
+          dropdownMenu.classList.toggle('dropdown-open');
+          const caretIcon = dropdownToggle.querySelector('i');
+          if (dropdownMenu.classList.contains('dropdown-open')) {
+            caretIcon.classList.remove('fa-caret-down');
+            caretIcon.classList.add('fa-caret-up');
+          } else {
+            caretIcon.classList.remove('fa-caret-up');
+            caretIcon.classList.add('fa-caret-down');
+          }
+          console.log('Dropdown Toggle clicked! Dropdown Menu class list:', dropdownMenu.classList);
+        }
+      });
+    } else {
+      console.error('Error: Dropdown toggle or dropdown menu elements not found.');
+    }
+  });
+</script>
+
+</body>
+</html>

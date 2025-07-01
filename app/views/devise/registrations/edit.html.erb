@@ -1,0 +1,58 @@
+<%# app/views/devise/registrations/edit.html.erb %>
+
+<h2>ویرایش پروفایل <%= resource_name.to_s.humanize %></h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true }) do |f| %> <%# multipart: true را اضافه کنید %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="field">
+    <%= f.label :username, "نام کاربری" %><br />
+    <%= f.text_field :username, autofocus: true, autocomplete: "username" %>
+  </div>
+
+  <%# اضافه کردن فیلد عکس پروفایل %>
+  <div class="field">
+    <%= f.label :avatar, "عکس پروفایل" %><br />
+    <% if f.object.avatar.attached? %>
+      <%= image_tag f.object.avatar.variant(resize_to_limit: [100, 100]), class: "profile-avatar-preview" %> <%# نمایش عکس فعلی %>
+      <%= f.check_box :remove_avatar %> حذف عکس فعلی <%# چک باکس برای حذف عکس %>
+    <% end %>
+    <%= f.file_field :avatar %> <%# فیلد انتخاب فایل %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autocomplete: "email" %>
+  </div>
+
+  <%# ... بقیه فیلدها (password, password_confirmation, current_password) ... %>
+
+  <div class="field">
+    <%= f.label :password %> <i>(اگر نمی‌خواهید تغییر دهید، خالی بگذارید)</i><br />
+    <%= f.password_field :password, autocomplete: "new-password" %>
+    <% if @minimum_password_length %>
+      <br />
+      <em><%= @minimum_password_length %> کاراکتر حداقل</em>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :current_password %> <i>(برای تایید تغییرات شما به رمز عبور فعلی نیاز داریم)</i><br />
+    <%= f.password_field :current_password, autocomplete: "current-password" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "بروزرسانی" %>
+  </div>
+<% end %>
+
+<h3>لغو اکانت من</h3>
+
+<p>ناراحتی؟ <%= button_to "لغو اکانت من", registration_path(resource_name), data: { confirm: "آیا مطمئن هستید؟", turbo_confirm: "آیا مطمئن هستید؟" }, method: :delete %></p>
+
+<%= link_to "بازگشت", :back %>

@@ -1,0 +1,39 @@
+<%# app/views/quotes/_form.html.erb %>
+
+<%= form_with(model: quote) do |form| %>
+  <% if quote.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(quote.errors.count, "خطا") %> مانع ذخیره این گلچین شد:</h2>
+
+      <ul>
+        <% quote.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :content, "محتوای گلچین", style: "display: block" %>
+    <%= form.text_area :content %>
+  </div>
+
+  <div>
+    <%= form.label :author, "نویسنده", style: "display: block" %>
+    <%= form.text_field :author %>
+  </div>
+
+  <div>
+    <%= form.label :book_title, "عنوان کتاب (اجباری)", style: "display: block" %>
+    <%= form.text_field :book_title %>
+  </div>
+
+  <div>
+    <%= form.label :tag_list, "تگ‌های اضافی (با کاما جدا کنید)", style: "display: block" %>
+    <%= form.text_field :tag_list, value: quote.tag_list.to_s %>
+  </div>
+
+  <div>
+    <%= form.submit "ذخیره گلچین" %>
+  </div>
+<% end %>

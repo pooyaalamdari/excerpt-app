@@ -1,0 +1,73 @@
+<%# app/views/quotes/_quote.html.erb %>
+
+<div id="<%= dom_id quote %>" class="quote-card">
+  <p>
+    <strong>محتوا:</strong>
+    <%= quote.content %>
+  </p>
+
+  <div class="user-info"> <%# کانتینر جدید برای عکس و نام کاربری %>
+    <% if quote.user.avatar.attached? %>
+      <%= image_tag quote.user.avatar.variant(resize_to_limit: [40, 40]), class: "user-avatar-small" %>
+    <% else %>
+      <%# یک آیکون یا عکس پیش‌فرض اگر آواتار وجود ندارد %>
+      <div class="user-avatar-placeholder"></div> <%# از CSS برای استایل دهی استفاده می کنیم %>
+    <% end %>
+    <p>
+      <strong>ایجاد شده توسط:</strong>
+      <%= quote.user.username %>
+    </p>
+  </div>
+
+  <%# لینک‌های ویرایش، حذف (فقط برای صاحب گلچین) و مشاهده (همیشه) %>
+  <div>
+    <% if user_signed_in? && current_user == quote.user %>
+      <%= link_to "ویرایش", edit_quote_path(quote) %> |
+      <%= button_to "حذف", quote, method: :delete, data: { confirm: 'مطمئنی؟' } %> |
+    <% end %>
+    <%= link_to "مشاهده", quote %>
+  </div>
+  <hr>
+
+  <%# بخش لایک‌ها %>
+  <div class="likes">
+    <% if user_signed_in? %>
+      <% if current_user.likes.exists?(quote: quote) %>
+        <%= button_to "لایک شده", quote_like_path(quote, current_user.likes.find_by(quote: quote)), method: :delete %>
+      <% else %>
+        <%= button_to "لایک", quote_likes_path(quote), method: :post %>
+      <% end %>
+    <% end %>
+    <span><%= quote.likes.count %> لایک</span>
+  </div>
+
+  <%# نمایش تگ‌ها %>
+  <div class="tags">
+    <% if quote.author_list.any? %>
+      <p>
+        <strong>نویسنده:</strong>
+        <% quote.author_list.each do |author_tag| %>
+          #<%= author_tag %>&nbsp;
+        <% end %>
+      </p>
+    <% end %>
+
+    <% if quote.book_title_list.any? %>
+      <p>
+        <strong>کتاب:</strong>
+        <% quote.book_title_list.each do |book_tag| %>
+          #<%= book_tag %>&nbsp;
+        <% end %>
+      </p>
+    <% end %>
+
+    <% if quote.tags.any? %>
+      <p>
+        <strong>تگ‌های اضافی:</strong>
+        <% quote.tags.each do |tag| %>
+          #<%= tag.name %>&nbsp;
+        <% end %>
+      </p>
+    <% end %>
+  </div>
+</div>

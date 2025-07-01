@@ -1,0 +1,611 @@
+/* app/assets/stylesheets/application.css */
+
+/* Define Color Palette */
+:root {
+  --primary-green: #20bc68;
+  --dark-blue: #033049;
+  --white: #ffffff;
+  --light-gray: #f8f8f8; /* A very light background */
+  --medium-gray: #e0e0e0; /* For borders */
+  --text-dark: #333333;
+  --text-light: #f0f0f0;
+  --error-red: #dc3545;
+  --notice-green: #28a745;
+}
+
+/* Base Body Styling */
+body {
+  font-family: 'Vazirmatn', sans-serif;
+  direction: rtl;
+  text-align: right;
+  line-height: 1.6;
+  color: var(--text-dark);
+  background-color: var(--light-gray);
+  margin: 0;
+  padding: 25px;
+}
+
+/* General Headings */
+h1, h2, h3 {
+  color: var(--dark-blue);
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* Navbar Styling (Desktop First) */
+.main-navbar { /* Main navbar container */
+  background-color: var(--dark-blue);
+  padding: 15px 25px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex; /* Use flex for the main navbar */
+  justify-content: space-between; /* Space out header and collapse */
+  align-items: center;
+}
+
+.navbar-container {
+  display: flex; /* This also needs to be flex for desktop */
+  justify-content: space-between; /* Space out header and collapse */
+  align-items: center;
+  width: 100%; /* Take full width of parent */
+}
+
+/* Navbar Header (Brand + Toggler) */
+.navbar-header {
+  display: flex;
+  align-items: center;
+  /* No specific width, let content define it for desktop */
+}
+
+.navbar-brand {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2em;
+  padding: 0;
+  transition: background-color 0.3s ease;
+  font-family: 'Vazirmatn', sans-serif;
+}
+.navbar-brand:hover {
+  background-color: transparent;
+  opacity: 0.8;
+}
+
+/* Navbar Toggler (Hamburger Button) */
+.navbar-toggler {
+  display: none; /* Hidden by default on desktop */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  position: relative;
+  z-index: 1001;
+}
+
+.toggler-icon {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: var(--white);
+  margin: 5px 0;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Navbar Collapse (Links Container) */
+.navbar-collapse {
+  display: flex; /* Default to flex for desktop */
+  justify-content: flex-end; /* Push links to the right (end) in RTL */
+  align-items: center;
+  flex-grow: 1; /* Take available space */
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-nav-main,
+.navbar-nav-auth {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+nav a { /* General nav link styling */
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+nav a:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.username-display { /* Specific class for username display */
+  color: var(--white);
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-right: 10px;
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+/* Dropdown Specific Styling (Desktop) */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dropdown-menu {
+  display: none; /* Hidden by default */
+  position: absolute;
+  background-color: var(--dark-blue);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 5px;
+  padding: 10px 0;
+  top: calc(100% + 5px);
+  right: 0; /* Align to the right in RTL */
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.dropdown-menu a {
+  color: var(--white);
+  padding: 10px 15px;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: right;
+}
+
+.dropdown-menu a:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Show the dropdown menu on hover for desktop */
+.dropdown:hover .dropdown-menu {
+  display: flex;
+}
+
+
+/* General Button Styling */
+input[type="submit"], button:not(.navbar-toggler), .link-as-button {
+  background-color: var(--primary-green);
+  color: var(--white);
+  border: none;
+  padding: 12px 25px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+input[type="submit"]:hover, button:not(.navbar-toggler):hover, .link-as-button:hover {
+  background-color: #1a9e55;
+  transform: translateY(-2px);
+}
+
+input[type="submit"]:active, button:not(.navbar-toggler):active, .link-as-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Specific Button Adjustments */
+.quote-card div a {
+  background-color: var(--dark-blue);
+  color: var(--white);
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: normal;
+  box-shadow: none;
+  font-family: 'Vazirmatn', sans-serif;
+}
+.quote-card div a:hover {
+  background-color: #022030;
+}
+
+.quote-card div button[type="submit"] {
+  background-color: var(--error-red);
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: normal;
+  font-family: 'Vazirmatn', sans-serif;
+}
+.quote-card div button[type="submit"]:hover {
+  background-color: #c82333;
+}
+
+/* Form Styling */
+form div {
+  margin-bottom: 15px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: var(--dark-blue);
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--medium-gray);
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 1em;
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus,
+form textarea:focus {
+  border-color: var(--primary-green);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(32, 188, 104, 0.2);
+}
+
+/* Quote Card Specific Styling */
+.quote-card {
+  background-color: var(--white);
+  border: 1px solid var(--medium-gray);
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.quote-card p {
+  margin-bottom: 10px;
+  line-height: 1.8;
+}
+
+.quote-card strong {
+  color: var(--dark-blue);
+  margin-left: 5px;
+}
+
+.quote-card > div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--medium-gray);
+}
+
+.quote-card .likes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.quote-card .likes button {
+  background-color: var(--primary-green);
+  color: var(--white);
+  padding: 8px 15px;
+  font-size: 0.9em;
+  font-weight: bold;
+  font-family: 'Vazirmatn', sans-serif;
+}
+.quote-card .likes button:hover {
+  background-color: #1a9e55;
+}
+
+.quote-card .likes span {
+  font-weight: bold;
+  color: var(--dark-blue);
+}
+
+/* Tags section styling */
+.tags {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid var(--medium-gray);
+}
+
+.tags p {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-size: 0.9em;
+  color: var(--text-dark);
+}
+
+.tags strong {
+  color: var(--dark-blue);
+  margin-left: 8px;
+}
+
+.tags span {
+  background-color: var(--primary-green);
+  color: var(--white);
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-left: 5px;
+  display: inline-block;
+  font-size: 0.8em;
+}
+
+/* Horizontal Rule (hr) styling - between quote cards */
+hr {
+  border: 0;
+  height: 1px;
+  background: var(--medium-gray);
+  margin: 30px 0;
+}
+
+/* Specific styling for the search form (Integrated) */
+.search-form {
+  background-color: var(--white);
+  border-radius: 30px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  margin: 30px auto;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--medium-gray);
+  overflow: hidden;
+}
+
+.search-input-group {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  padding: 10px 15px;
+}
+
+.search-field {
+  flex-grow: 1;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  font-size: 1em;
+  font-family: 'Vazirmatn', sans-serif;
+  outline: none;
+  background-color: transparent;
+  min-width: 100px;
+}
+
+.search-field::placeholder {
+  color: #888;
+  text-align: right;
+}
+
+.search-field:focus {
+  outline: none;
+}
+
+.search-button {
+  background-color: var(--primary-green);
+  color: var(--white);
+  border: none;
+  padding: 10px 15px;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  box-shadow: none;
+  flex-shrink: 0;
+  margin-right: -15px; /* Pull button slightly into the padding of the input group */
+}
+
+.search-button:hover {
+  background-color: #1a9e55;
+  transform: translateY(0);
+}
+
+.search-button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Profile Avatar Preview on Edit Profile Page */
+.profile-avatar-preview {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary-green);
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* User Info Section in Quote Card */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.user-avatar-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--medium-gray);
+  flex-shrink: 0;
+}
+
+.user-avatar-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--medium-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 1.5em;
+  flex-shrink: 0;
+}
+
+
+/* Responsive adjustments for Navbar (Mobile/Tablet) */
+@media (max-width: 768px) {
+  .main-navbar {
+    flex-direction: column; /* Stack header and collapse vertically */
+    align-items: flex-start; /* Align contents to the right in RTL */
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .navbar-container {
+    flex-direction: column; /* Stack header and collapse vertically */
+    align-items: flex-start; /* Align contents to the right in RTL */
+    width: 100%; /* Take full width */
+  }
+
+  .navbar-header {
+    width: 100%; /* Take full width on mobile */
+    justify-content: space-between; /* Brand on one side, toggler on other */
+    margin-bottom: 0;
+  }
+
+  .navbar-brand {
+    font-size: 1.2em;
+  }
+
+  .navbar-toggler {
+    display: block; /* Show hamburger button on small screens */
+  }
+
+  .navbar-collapse {
+    display: none; /* Crucial: Hide links by default on small screens */
+    flex-direction: column; /* Stack links vertically when shown */
+    width: 100%; /* Take full width when shown */
+    align-items: flex-end; /* Align links to the right */
+    gap: 10px; /* Space between stacked links */
+    padding-top: 15px; /* Padding above links when open */
+    border-top: 1px solid rgba(255, 255, 255, 0.2); /* Separator when open */
+  }
+
+  .navbar-collapse.show {
+    display: flex; /* Show links when menu is open */
+  }
+
+  .navbar-nav-main,
+  .navbar-nav-auth {
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    gap: 10px;
+  }
+
+  nav a:not(.navbar-brand), .username-display { /* Apply to all nav links except brand and username */
+    width: 100%;
+    text-align: right;
+    padding: 10px 0;
+  }
+
+  /* Dropdown adjustments for mobile */
+  .dropdown {
+    width: 100%; /* Ensure dropdown takes full width in mobile menu */
+  }
+
+  .dropdown-toggle {
+    width: 100%; /* Ensure toggle takes full width in mobile menu */
+    justify-content: flex-end; /* Align toggle content to the right */
+    padding: 10px 0; /* Adjust padding for mobile dropdown toggle */
+  }
+
+  .dropdown-menu {
+    display: none; /* Hidden by default in mobile */
+    position: static; /* Remove absolute positioning */
+    flex-direction: column;
+    width: 100%;
+    box-shadow: none;
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
+    align-items: flex-end;
+    gap: 5px;
+    margin-top: 5px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator for dropdown items */
+    padding-top: 5px;
+  }
+
+  .dropdown-menu.dropdown-open { /* Show when dropdown-open class is present */
+    display: flex;
+  }
+
+  .dropdown-menu a {
+    padding: 8px 0;
+    width: 100%;
+    text-align: right;
+  }
+
+  /* Search form adjustments */
+  .search-form {
+    width: calc(100% - 30px);
+    margin: 20px auto;
+    padding: 0;
+  }
+  .search-input-group {
+    padding: 8px 12px;
+    gap: 5px;
+  }
+  .search-field {
+    font-size: 0.9em;
+    min-width: unset;
+  }
+  .search-button {
+    padding: 8px 12px;
+    font-size: 1em;
+    margin-right: -12px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+  nav {
+    padding: 10px;
+  }
+  .quote-card {
+    padding: 15px;
+  }
+  .quote-card > div {
+    gap: 10px;
+  }
+}
